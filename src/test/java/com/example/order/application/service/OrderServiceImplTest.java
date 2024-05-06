@@ -3,9 +3,9 @@ package com.example.order.application.service;
 import com.example.order.application.domain.Order;
 import com.example.order.application.domain.Product;
 import com.example.order.application.enums.OrderStatus;
-import com.example.order.port.SequenceGeneratorService;
-import com.example.order.port.out.PersistenceService;
-import com.example.order.port.out.ProducerService;
+import com.example.order.port.out.SequenceGeneratorOutputPort;
+import com.example.order.port.out.PersistenceOutputPort;
+import com.example.order.port.out.ProducerOutputPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,17 +27,17 @@ class OrderServiceImplTest {
     private OrderServiceImpl orderService;
 
     @Mock
-    private SequenceGeneratorService sequenceGeneratorService;
+    private SequenceGeneratorOutputPort sequenceGeneratorOutputPort;
 
     @Mock
-    private PersistenceService persistenceService;
+    private PersistenceOutputPort persistenceOutputPort;
 
     @Mock
-    private ProducerService producerService;
+    private ProducerOutputPort producerOutputPort;
 
     @BeforeEach
     void setUp() {
-        Mockito.when(sequenceGeneratorService.generateSequence(Mockito.any())).thenReturn(1L);
+        Mockito.when(sequenceGeneratorOutputPort.generateSequence(Mockito.any())).thenReturn(1L);
     }
 
     @Test
@@ -53,7 +53,7 @@ class OrderServiceImplTest {
         Order order = new Order();
         order.setProducts(products);
 
-        Mockito.when(persistenceService.save(Mockito.any())).thenReturn(order);
+        Mockito.when(persistenceOutputPort.save(Mockito.any())).thenReturn(order);
 
         assertDoesNotThrow(() -> orderService.create(order));
         assertNotNull(orderService.create(order).getId());

@@ -1,6 +1,6 @@
 package com.example.order.adapter.message.producer;
 
-import com.example.order.port.out.ProducerService;
+import com.example.order.port.out.ProducerOutputPort;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class MessageProducer implements ProducerService {
+public class MessageProducer implements ProducerOutputPort {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 

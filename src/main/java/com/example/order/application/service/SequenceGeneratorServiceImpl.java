@@ -1,7 +1,7 @@
 package com.example.order.application.service;
 
 import com.example.order.adapter.persistence.entity.DatabaseSequence;
-import com.example.order.port.SequenceGeneratorService;
+import com.example.order.port.out.SequenceGeneratorOutputPort;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
@@ -15,7 +15,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 @AllArgsConstructor
 @Service
-public class SequenceGeneratorServiceImpl implements SequenceGeneratorService {
+public class SequenceGeneratorServiceImpl implements SequenceGeneratorOutputPort {
 
     private final MongoOperations mongoOperations;
 

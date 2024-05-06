@@ -1,6 +1,6 @@
 package com.example.order.adapter.message.consumer;
 
-import com.example.order.port.in.OrderService;
+import com.example.order.port.in.OrderInputPort;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -9,19 +9,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageConsumer {
 
-    private final OrderService orderService;
+    private final OrderInputPort orderInputPort;
 
     @KafkaListener(topics = "order-topic", groupId = "order-group-id")
     public void listen(String data) {
         System.out.println("Received message: " + data);
 
+        //TODO remover
         try {
             Thread.sleep(20000);
         } catch (InterruptedException ignored) {
 
         }
 
-       orderService.update(data);
+        orderInputPort.update(data);
     }
 
 }

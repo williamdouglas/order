@@ -2,7 +2,7 @@ package com.example.order.port.out;
 
 import com.example.order.application.domain.Order;
 
-public interface PersistenceService {
+public interface PersistenceOutputPort {
 
     Order save(Order order);
 

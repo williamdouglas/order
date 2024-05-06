@@ -4,13 +4,13 @@ import com.example.order.adapter.persistence.entity.OrderEntity;
 import com.example.order.adapter.persistence.mapper.OrderPersistenceMapper;
 import com.example.order.adapter.persistence.repository.OrderRepository;
 import com.example.order.application.domain.Order;
-import com.example.order.port.out.PersistenceService;
+import com.example.order.port.out.PersistenceOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class PersistenceAdapter implements PersistenceService {
+public class PersistenceAdapter implements PersistenceOutputPort {
 
     private final OrderPersistenceMapper orderPersistenceMapper;
 

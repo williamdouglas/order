@@ -5,32 +5,36 @@ import com.example.order.application.domain.Order;
 import com.example.order.application.enums.OrderStatus;
 import com.example.order.application.exception.ProductNotFoundException;
 import com.example.order.application.exception.RestExceptionHandler;
-import com.example.order.port.SequenceGeneratorService;
-import com.example.order.port.in.OrderService;
-import com.example.order.port.out.PersistenceService;
-import com.example.order.port.out.ProducerService;
+import com.example.order.port.out.SequenceGeneratorOutputPort;
+import com.example.order.port.in.OrderInputPort;
+import com.example.order.port.out.PersistenceOutputPort;
+import com.example.order.port.out.ProducerOutputPort;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderInputPort {
 
-    private final PersistenceService persistenceService;
+    private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-    private final SequenceGeneratorService sequenceGeneratorService;
+    private final PersistenceOutputPort persistenceOutputPort;
 
-    private final ProducerService producerService;
+    private final SequenceGeneratorOutputPort sequenceGeneratorOutputPort;
+
+    private final ProducerOutputPort producerOutputPort;
 
     @Override
     public Order create(Order order) {
-        order.setId(sequenceGeneratorService.generateSequence(OrderEntity.SEQUENCE_NAME));
+        order.setId(sequenceGeneratorOutputPort.generateSequence(OrderEntity.SEQUENCE_NAME));
         order.setStatus(OrderStatus.AGUARDANDO_ENVIO.name());
 
         try {
-            order = persistenceService.save(order);
+            order = persistenceOutputPort.save(order);
         } catch (Exception e) {
             throw new RestExceptionHandler("Erro ao gravar dados do pedido.", e);
         }
@@ -42,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void postMessageKafka(Order order) {
         try {
-            producerService.sendMessage("order-topic", order);
+            producerOutputPort.sendMessage("order-topic", order);
         } catch (JsonProcessingException e) {
             throw new RestExceptionHandler("Erro ao fazer o parse do objeto.", e);
         } catch (Exception e) {
@@ -55,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         Order order;
 
         try {
-            order = persistenceService.findById(id);
+            order = persistenceOutputPort.findById(id);
         } catch (Exception e) {
             throw new RestExceptionHandler("Erro ao buscar dados do pedido.", e);
         }
@@ -84,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order update(Order order) {
         try {
-            return persistenceService.save(order);
+            return persistenceOutputPort.save(order);
         } catch (Exception e) {
             throw new RestExceptionHandler("Erro ao atualizar status do pedido.", e);
         }

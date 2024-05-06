@@ -1,4 +1,4 @@
-package com.example.order.adapter.message.consumer.config;
+package com.example.order.adapter.message.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
