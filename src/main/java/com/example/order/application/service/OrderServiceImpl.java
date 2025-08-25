@@ -156,4 +156,18 @@ public class OrderServiceImpl implements OrderInputPort {
         }
     }
 
+    /**
+     * Removes an order by its unique identifier.
+     *
+     * @param id the unique identifier of the order to be removed
+     * @throws RestExceptionHandler if there's an error during order removal
+     */
+    @Override
+    public void remove(Long id) {
+        try {
+            persistenceOutputPort.remove(id);
+        } catch (Exception e) {
+            throw new RestExceptionHandler("Erro ao remover pedido.", e);
+        }
+    }
 }

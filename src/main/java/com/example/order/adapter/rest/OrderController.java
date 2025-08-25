@@ -70,4 +70,17 @@ public class OrderController {
         return ResponseEntity.ok(orderDTOs);
     }
 
+
+    /**
+     * Removes a specific order by its unique identifier.
+     *
+     * @param id the unique identifier of the order to be removed
+     * @return ResponseEntity with HTTP status 204 (No Content) if successful
+     * @throws RestExceptionHandler if there's an error during order removal
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remove(@PathVariable("id") Long id) {
+        orderInputPort.remove(id);
+        return ResponseEntity.noContent().build();
+    }
 }

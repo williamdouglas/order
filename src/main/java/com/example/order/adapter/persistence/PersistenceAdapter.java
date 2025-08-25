@@ -67,4 +67,13 @@ public class PersistenceAdapter implements PersistenceOutputPort {
                 .toList();
     }
 
+    /**
+     * Removes an order from the database by its unique identifier.
+     *
+     * @param id the unique identifier of the order to be removed
+     */
+    @Override
+    public void remove(Long id) {
+        orderRepository.deleteById(id);
+    }
 }

@@ -52,5 +52,12 @@ public interface OrderInputPort {
      * @return the updated order domain object
      */
     Order update(Order order);
+    
+    /**
+     * Removes an order by its unique identifier.
+     *
+     * @param id the unique identifier of the order to be removed
+     */
+    void remove(Long id);
 
 }

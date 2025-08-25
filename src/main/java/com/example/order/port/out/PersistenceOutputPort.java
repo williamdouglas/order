@@ -37,5 +37,12 @@ public interface PersistenceOutputPort {
      * @return a list of all order domain objects
      */
     List<Order> findAll();
+    
+    /**
+     * Removes an order from the data store by its unique identifier.
+     *
+     * @param id the unique identifier of the order to be removed
+     */
+    void remove(Long id);
 
 }
