@@ -19,7 +19,7 @@ public interface OrderInputPort {
      * Creates a new order in the system.
      *
      * @param order the order domain object to be created
-     * @return the created order with generated ID and initial status
+     * @return the created ord'er with generated ID and initial status
      */
     Order create(Order order);
 

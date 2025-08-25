@@ -51,7 +51,7 @@ public class OrderController {
      * @throws RestExceptionHandler if there's an error during order retrieval
      */
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDTO> get(@PathVariable("id") Long id) {
+    public ResponseEntity<OrderDTO> get(@PathVariable Long id) {
         return ResponseEntity.ok(orderRestMapper.domainToModelDto(orderInputPort.get(id)));
     }
 
@@ -79,7 +79,7 @@ public class OrderController {
      * @throws RestExceptionHandler if there's an error during order removal
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> remove(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> remove(@PathVariable Long id) {
         orderInputPort.remove(id);
         return ResponseEntity.noContent().build();
     }
